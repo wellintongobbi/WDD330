@@ -1,8 +1,9 @@
 import { getLocalStorage } from "./utils.mjs";
+
 function renderCartTotal(cartItems) {
   const footer = document.querySelector(".cart-footer");
 
-  // só mostra se o carrinho não estiver vazio
+  // só mostra o total se o carrinho não estiver vazio
   if (cartItems.length > 0) {
     footer.classList.remove("hide");
 
@@ -10,6 +11,7 @@ function renderCartTotal(cartItems) {
     document.querySelector(".cart-total").innerHTML = `Total: $${total.toFixed(2)}`;
   }
 }
+
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
@@ -36,7 +38,5 @@ function cartItemTemplate(item) {
 
   return newItem;
 }
-
-
 
 renderCartContents();
