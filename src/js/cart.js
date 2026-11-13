@@ -1,9 +1,21 @@
 import { getLocalStorage } from "./utils.mjs";
+function renderCartTotal(cartItems) {
+  const footer = document.querySelector(".cart-footer");
 
+  // só mostra se o carrinho não estiver vazio
+  if (cartItems.length > 0) {
+    footer.classList.remove("hide");
+
+    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    document.querySelector(".cart-total").innerHTML = `Total: $${total.toFixed(2)}`;
+  }
+}
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  renderCartTotal(cartItems);
 }
 
 function cartItemTemplate(item) {
@@ -24,5 +36,7 @@ function cartItemTemplate(item) {
 
   return newItem;
 }
+
+
 
 renderCartContents();
