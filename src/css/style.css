@@ -266,9 +266,14 @@ footer {
   display: none;
 }
 
+/* Categories (home) */
 .categories {
-  padding: 1rem;
+  padding: 2rem 1rem 1rem;
   text-align: center;
+}
+
+.categories h2 {
+  margin-bottom: 1rem;
 }
 
 .category-list {
@@ -284,8 +289,14 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
   color: inherit;
+}
+
+.category-list a:hover span {
+  color: var(--tertiary-color);
+  text-decoration: underline;
 }
 
 .category-list img {

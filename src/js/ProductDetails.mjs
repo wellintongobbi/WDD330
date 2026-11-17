@@ -34,7 +34,7 @@ export default class ProductDetails {
         document.querySelector(".product-detail h2").textContent = p.NameWithoutBrand;
 
         const img = document.querySelector(".product-detail img");
-        img.src = p.Image;
+        img.src = p.Images.PrimaryLarge;
         img.alt = p.NameWithoutBrand;
 
         document.querySelector(".product-card__price").textContent = `$${p.FinalPrice.toFixed(2)}`;
