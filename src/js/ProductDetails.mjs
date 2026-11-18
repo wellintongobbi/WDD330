@@ -9,15 +9,26 @@ export default class ProductDetails {
 
     async init() {
         this.product = await this.dataSource.findProductById(this.productId);
-        this.renderProductDetails();
+
+        // listener antes do render: se o render falhar, o botão continua funcionando
         document
             .getElementById("addToCart")
             .addEventListener("click", this.addProductToCart.bind(this));
+
+        this.renderProductDetails();
     }
 
     addProductToCart() {
         const cart = getLocalStorage("so-cart") || [];
-        cart.push(this.product);
+        const existing = cart.find((item) => item.Id === this.product.Id);
+
+        if (existing) {
+            // produto já está no carrinho: soma 1 na quantidade
+            existing.quantity = (existing.quantity || 1) + 1;
+        } else {
+            cart.push({ ...this.product, quantity: 1 });
+        }
+
         setLocalStorage("so-cart", cart);
 
         // feedback opcional
@@ -38,7 +49,7 @@ export default class ProductDetails {
         img.alt = p.NameWithoutBrand;
 
         document.querySelector(".product-card__price").textContent = `$${p.FinalPrice.toFixed(2)}`;
-        document.querySelector(".product__color").textContent = p.Colors[0].ColorName;
+        document.querySelector(".product__color").textContent = p.Colors?.[0]?.ColorName ?? "";
         document.querySelector(".product__description").innerHTML = p.DescriptionHtmlSimple;
 
         document.getElementById("addToCart").dataset.id = p.Id;
